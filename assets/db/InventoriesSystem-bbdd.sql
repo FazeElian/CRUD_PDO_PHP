@@ -1,9 +1,9 @@
--- IF EXISTS DROP DATABASE INVENTORIES_SYSTEM;
+-- IF EXISTS DROP DATABASE CRUD_PDO_PHP;
 -- -----------------------------------------------------
--- ESTRUCTURA INVENTORIES_SYSTEM
+-- ESTRUCTURA CRUD_PDO_PHP
 -- -----------------------------------------------------
-CREATE DATABASE INVENTORIES_SYSTEM DEFAULT CHARACTER SET utf8 ;
-USE INVENTORIES_SYSTEM;
+CREATE DATABASE CRUD_PDO_PHP DEFAULT CHARACTER SET utf8 ;
+USE CRUD_PDO_PHP;
 
 -- -----------------------------------------------------
 -- TABLA USERS
@@ -30,7 +30,7 @@ CREATE TABLE PRODUCTS_CATEGORIES (
 -- TABLA PRODUCTS
 -- -----------------------------------------------------
 CREATE TABLE PRODUCTS (
-  idProduct INT NOT NULL,
+  idProduct INT NOT NULL AUTO_INCREMENT,
   idCategory INT NOT NULL,
   productName VARCHAR(50) NOT NULL,
   productDescription VARCHAR(100) NOT NULL,

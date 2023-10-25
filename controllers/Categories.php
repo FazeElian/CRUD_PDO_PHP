@@ -22,7 +22,6 @@
                 $category = new Category;
                 $category->setNameCategory($_POST['nameCategory']);
                 $category->createCategory();            
-                echo "<script>alert('Categoría Creada');</script>";    
                 header("Location:?c=Categories");
             }
         }

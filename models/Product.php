@@ -3,7 +3,7 @@
         // Encapsulamiento de variables de entradas de formulario 
         private $dbh; // Variable asignada para la conexión de la base de datos
         private $idProduct;
-        private $idCategorie;
+        private $idCategory;
         private $productName;
         private $productDescription;
         private $productPrice;
@@ -21,10 +21,10 @@
             } 
         }
 
-        public function __construct5($idProduct, $idCategorie, $productName, $productDescription, $productPrice){
+        public function __construct5($idProduct, $idCategory, $productName, $productDescription, $productPrice){
             // Referencia datos - métodos de producto
             $this->idProduct = $idProduct;
-            $this->idCategorie = $idCategorie;
+            $this->idCategory = $idCategory;
             $this->productName = $productName;
             $this->productDescription = $productDescription;
             $this->productPrice = $productPrice;
@@ -42,13 +42,13 @@
             }
 
             // Id Categoría - Set
-            public function setIdCategorie($idCategorie){
-                $this->idCategorie = $idCategorie;
+            public function setIdCategory($idCategory){
+                $this->idCategory = $idCategory;
             }
 
             // Id Categoría Get
-            public function getIdCategorie(){
-                return $this->idCategorie;
+            public function getIdCategory(){
+                return $this->idCategory;
             }
 
             // Nombre de Producto - Set
@@ -86,12 +86,12 @@
             public function createProduct(){
                 try {
                     // Inserción SQL
-                    $sql = 'INSERT INTO PRODUCTS VALUES (:idProduct,:idCategorie,:productName,:productDescription,:productPrice)';
+                    $sql = 'INSERT INTO PRODUCTS VALUES (:idProduct,:idCategory,:productName,:productDescription,:productPrice)';
                     $stmt = $this->dbh->prepare($sql);
                     
                     // Obtención de datos de producto por método Get de función
                     $stmt->bindValue('idProduct', $this->getIdProduct());
-                    $stmt->bindValue('idCategorie', $this->getIdCategorie());
+                    $stmt->bindValue('idCategory', $this->getIdCategory());
                     $stmt->bindValue('productName', $this->getProductName());
                     $stmt->bindValue('productDescription', $this->getProductDescription());
                     $stmt->bindValue('productPrice', $this->getProductPrice());
@@ -112,7 +112,7 @@
 
                         // Consulta de cada columna por su nombre en la base de datos
                         $productObj->setIdProduct($product['idProduct']);
-                        $productObj->setIdCategorie($product['idCategorie']);
+                        $productObj->setIdCategory($product['idCategory']);
                         $productObj->setProductName($product['productName']);
                         $productObj->setProductDescription($product['productDescription']);
                         $productObj->setProductPrice($product['productPrice']);
@@ -138,7 +138,7 @@
                     
                     // Consulta de cada columna por su nombre en la base de datos
                     $product->setIdProduct($productDb['idProduct']);
-                    $product->setIdCategorie($productDb['idCategorie']);
+                    $product->setIdCategory($productDb['idCategory']);
                     $product->setProductName($productDb['productName']);
                     $product->setProductDescription($productDb['productDescription']);
                     $product->setProductPrice($productDb['productPrice']);
@@ -154,14 +154,14 @@
                     // Actualización de todos los datos - SQL      
                     $sql = 'UPDATE PRODUCTS SET
                                 idProduct = :idProduct,
-                                idCategorie = :idCategorie,
+                                idCategory = :idCategory,
                                 productName = :productName,
                                 productDescription = :productDescription,
                                 productPrice = :productPrice,
                             WHERE idProduct = :idProduct';
                     $stmt = $this->dbh->prepare($sql);
                     $stmt->bindValue('idProduct', $this->getIdProduct());
-                    $stmt->bindValue('idCategorie', $this->getIdCategorie());
+                    $stmt->bindValue('idCategory', $this->getIdCategory());
                     $stmt->bindValue('productName', $this->getProductName());
                     $stmt->bindValue('productDescription', $this->getProductDescription());
                     $stmt->bindValue('productPrice', $this->getProductPrice());

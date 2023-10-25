@@ -3,7 +3,7 @@
         public static function connection(){            
             $hostname = "localhost";
             $port = "3306";
-            $database = "inventories_system";
+            $database = "crud_pdo_php";
             $username = "root";
             $password = "";
 			$pdo = new PDO("mysql:host=$hostname;port=$port;dbname=$database;charset=utf8",$username,$password);
