@@ -1,12 +1,9 @@
 <?php
     class Product{
-        // Encapsulamiento de variables de entradas de formulario 
-        private $dbh; // Variable asignada para la conexión de la base de datos
+        private $dbh;
         private $idProduct;
-        private $idCategory;
-        private $productName;
-        private $productDescription;
-        private $productPrice;
+        private $nameProduct;
+        private $priceProduct;
 
         public function __construct(){
             try {
@@ -14,108 +11,73 @@
                 $a = func_get_args();
                 $i = func_num_args();
                 if (method_exists($this, $f = '__construct' . $i)) {
-                    call_Product_func_array(array($this, $f), $a);
+                    call_user_func_array(array($this, $f), $a);
                 }
             } catch (Exception $e) {
                 die($e->getMessage());
             } 
         }
 
-        public function __construct5($idProduct, $idCategory, $productName, $productDescription, $productPrice){
-            // Referencia datos - métodos de producto
+        public function __construct3($idProduct, $nameProduct, $priceProduct){
             $this->idProduct = $idProduct;
-            $this->idCategory = $idCategory;
-            $this->productName = $productName;
-            $this->productDescription = $productDescription;
-            $this->productPrice = $productPrice;
-        }
+            $this->nameProduct = $nameProduct;
+            $this->priceProduct = $priceProduct;
+        }    
 
-        // Métodos Set y Get de cada dato de Producto
-            // Id Producto - Set
+        // Métodos SET y GET
+            // ID
             public function setIdProduct($idProduct){
                 $this->idProduct = $idProduct;
             }
 
-            // Id Producto Get
             public function getIdProduct(){
                 return $this->idProduct;
             }
 
-            // Id Categoría - Set
-            public function setIdCategory($idCategory){
-                $this->idCategory = $idCategory;
+            // Name
+            public function setNameProduct($nameProduct){
+                $this->nameProduct = $nameProduct;
             }
 
-            // Id Categoría Get
-            public function getIdCategory(){
-                return $this->idCategory;
+            public function getNameProduct(){
+                return $this->nameProduct;
+            } 
+            
+            // Price
+            public function setPriceProduct($priceProduct){
+                $this->priceProduct = $priceProduct;
             }
 
-            // Nombre de Producto - Set
-            public function setProductName($productName){
-                $this->productName = $productName;
+            public function getPriceProduct(){
+                return $this->priceProduct;
             }
 
-            // Nombre de Producto - Get
-            public function getProductName(){
-                return $this->productName;
-            }
-
-            // Descripción de Producto - Set
-            public function setProductDescription($productDescription){
-                $this->productDescription = $productDescription;
-            }
-
-            // Descripción de Producto - Get
-            public function getProductDescription(){
-                return $this->productDescription;
-            }
-
-            // Precio de Producto - Set
-            public function setProductPrice($productPrice){
-                $this->productPrice = $productPrice;
-            }
-
-            // Precio de Producto - Get{
-            public function getProductPrice(){
-                return $this->productPrice;
-            }
-
-        // Funcionalidades de CRUD para Productos
+        // Funcionalidades de Producto
             // Crear Producto
             public function createProduct(){
                 try {
-                    // Inserción SQL
-                    $sql = 'INSERT INTO PRODUCTS VALUES (:idProduct,:idCategory,:productName,:productDescription,:productPrice)';
-                    $stmt = $this->dbh->prepare($sql);
-                    
-                    // Obtención de datos de producto por método Get de función
+                    $sql = 'INSERT INTO PRODUCTS VALUES (:idProduct, :nameProduct, :priceProduct)';
+                    $stmt = $this->dbh->prepare($sql);                
                     $stmt->bindValue('idProduct', $this->getIdProduct());
-                    $stmt->bindValue('idCategory', $this->getIdCategory());
-                    $stmt->bindValue('productName', $this->getProductName());
-                    $stmt->bindValue('productDescription', $this->getProductDescription());
-                    $stmt->bindValue('productPrice', $this->getProductPrice());
+                    $stmt->bindValue('nameProduct', $this->getNameProduct());
+                    $stmt->bindValue('priceProduct', $this->getPriceProduct());
                     $stmt->execute();
                 } catch (Exception $e) {
                     die($e->getMessage());
-                } 
+                }                
             }
-
+    
             // Consultar Productos
             public function readProduct(){
                 try {
-                    $productList = []; // Creamos una variable como arreglo donde incluya la lista de todos los productos
-                    $sql = 'SELECT * FROM PRODUCTS'; // Consulta SQL
-                    $stmt = $this->dbh->query($sql); // Consulta con método query incluyendo la variable con el código SQL de la consulta
+                    $productList = [];
+                    $sql = 'SELECT * FROM PRODUCTS';
+                    $stmt = $this->dbh->query($sql);
                     foreach ($stmt->fetchAll() as $product) {                    
-                        $productObj = new Product; 
-
-                        // Consulta de cada columna por su nombre en la base de datos
-                        $productObj->setIdProduct($product['idProduct']);
-                        $productObj->setIdCategory($product['idCategory']);
-                        $productObj->setProductName($product['productName']);
-                        $productObj->setProductDescription($product['productDescription']);
-                        $productObj->setProductPrice($product['productPrice']);
+                        $productObj = new Product;
+                        $productObj->setIdproduct($product['idProduct']);
+                        $productObj->setNameproduct($product['nameProduct']);
+                        $productObj->setPriceProduct($product['priceProduct']);
                         array_push($productList, $productObj);
                     }
                     return $productList;
@@ -124,24 +86,19 @@
                 }
             }
 
-            // Obtener el código de Producto
-            public function getProductById($idProduct){ // Parámetro de Id de producto dentro de la función
+            // Obtener el Id de Producto
+            public function getProductById($idProduct){
                 try {
-                    // Consulta SQL donde el idProducto de formulario sea igual al de la columna en la tabla de la bbdd
                     $sql = "SELECT * FROM PRODUCTS WHERE idProduct=:idProduct";
-
                     $stmt = $this->dbh->prepare($sql);
-                    $stmt->bindValue('productCode', $productCode);
+                    $stmt->bindValue('idProduct', $idProduct);
                     $stmt->execute();
                     $productDb = $stmt->fetch();
-                    $product = new Product;
-                    
-                    // Consulta de cada columna por su nombre en la base de datos
-                    $product->setIdProduct($productDb['idProduct']);
-                    $product->setIdCategory($productDb['idCategory']);
-                    $product->setProductName($productDb['productName']);
-                    $product->setProductDescription($productDb['productDescription']);
-                    $product->setProductPrice($productDb['productPrice']);
+                    $product = new Product(
+                        $productDb['idProduct'],
+                        $productDb['nameProduct'],
+                        $productDb['priceProduct']
+                    );
                     return $product;
                 } catch (Exception $e) {
                     die($e->getMessage());
@@ -150,32 +107,32 @@
 
             // Actualizar producto
             public function updateProduct(){
-                try {          
-                    // Actualización de todos los datos - SQL      
+                try {                
                     $sql = 'UPDATE PRODUCTS SET
                                 idProduct = :idProduct,
-                                idCategory = :idCategory,
-                                productName = :productName,
-                                productDescription = :productDescription,
-                                productPrice = :productPrice,
+                                nameProduct = :nameProduct,
+                                priceProduct = :priceProduct
                             WHERE idProduct = :idProduct';
                     $stmt = $this->dbh->prepare($sql);
                     $stmt->bindValue('idProduct', $this->getIdProduct());
-                    $stmt->bindValue('idCategory', $this->getIdCategory());
-                    $stmt->bindValue('productName', $this->getProductName());
-                    $stmt->bindValue('productDescription', $this->getProductDescription());
-                    $stmt->bindValue('productPrice', $this->getProductPrice());
+                    $stmt->bindValue('nameProduct', $this->getNameProduct());
+                    $stmt->bindValue('priceProduct', $this->getPriceProduct());
                     $stmt->execute();
                 } catch (Exception $e) {
                     die($e->getMessage());
-                }         
+                }
             }
 
             // Eliminar Producto
-            public function deleteProduct(){
-                $product = new Product;
-                $product->deleteProduct($_GET['idProduct']);
-                header('Location:?c=Products'); // Redirección a Página de Productos                  
+            public function deleteProduct($idProduct){
+                try {
+                    $sql = 'DELETE FROM PRODUCTS WHERE idProduct = :idProduct';
+                    $stmt = $this->dbh->prepare($sql);
+                    $stmt->bindValue('idProduct', $idProduct);
+                    $stmt->execute();
+                } catch (Exception $e) {
+                    die($e->getMessage());
+                }            
             }
     }
-    
+?>
