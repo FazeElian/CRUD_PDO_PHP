@@ -32,7 +32,7 @@
                             <a href="?c=Products&a=updateProduct&idProduct=<?php echo $product->getIdProduct(); ?>" class="btn btn-primary">
                                 Editar 
                             </a>	
-                            <a href="?c=Products&a=deleteProduct&idProduct=<?php echo $product->getIdProduct() ?>" class="btn btn-danger mx-3">
+                            <a href="?c=Products&a=deleteProduct&idProduct=<?php echo $product->getIdProduct(); ?>" class="btn btn-danger mx-3">
                                 Eliminar
                             </a>							
                         <td>
