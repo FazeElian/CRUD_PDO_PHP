@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
+    <title>Lista de Clientes</title>
 </head>
 <body>
     <div class="mx-5 my-5">
-        <h1>Lista de Productos: </h1>
+        <h1>Lista de Clientes: </h1>
         <br>
 
-        <a href="?c=Products&a=createProduct"><button class="btn btn-primary">Nuevo Producto</button></a>
+        <a href="?c=Customers&a=createCustomer"><button class="btn btn-primary">Nuevo Cliente</button></a>
         <br>
         <br>
         <table class="table">
@@ -23,16 +23,16 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($products as $product) : ?>
+                <?php foreach ($customers as $customer) : ?>
                     <tr>
-                        <td><?php echo $product->getIdProduct(); ?></td>
-                        <td><?php echo $product->getNameProduct(); ?></td>
-                        <td><?php echo $product->getPriceProduct(); ?></td>
+                        <td><?php echo $customer->getIdCustomer(); ?></td>
+                        <td><?php echo $customer->getNameCustomer(); ?></td>
+                        <td><?php echo $customer->getDescriptionCustomer(); ?></td>
                         <td>
-                            <a href="?c=Products&a=updateProduct&idProduct=<?php echo $product->getIdProduct(); ?>" class="btn btn-primary">
+                            <a href="?c=Customers&a=updateCustomer&idCustomer=<?php echo $customer->getIdCustomer(); ?>" class="btn btn-primary">
                                 Editar 
                             </a>	
-                            <a href="?c=Products&a=deleteProduct&idProduct=<?php echo $product->getIdProduct() ?>" class="btn btn-danger mx-3">
+                            <a href="?c=Customers&a=deleteCustomer&idCustomer=<?php echo $customer->getIdCustomer(); ?>" class="btn btn-danger mx-3">
                                 Eliminar
                             </a>							
                         <td>
