@@ -7,14 +7,14 @@
         // Carga de vistas de página principal de productos
         public function main(){  
             require_once "views/layouts/bootstrap.php";
-            require_once "views/index.view.php";
+            require_once "views/modules/products/index.view.php";
         }
 
         // Crear Producto
         public function createProduct(){
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 require_once "views/layouts/bootstrap.php";
-                require_once "views/create.view.php";
+                require_once "views/modules/products/create.view.php";
             }
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $product = new Product;
@@ -31,7 +31,7 @@
             $products = new Product;
             $products = $products->readProduct();            
             require_once "views/layouts/bootstrap.php";
-            require_once "views/read.view.php";
+            require_once "views/modules/products/read.view.php";
         }
 
         // Actualizar producto
@@ -40,7 +40,7 @@
                 $product = new Product;
                 $product = $product->getProductById($_GET['idProduct']);
                 require_once "views/layouts/bootstrap.php";
-                require_once "views/edit.view.php";              
+                require_once "views/modules/products/edit.view.php";              
             }
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $product = new Product(
