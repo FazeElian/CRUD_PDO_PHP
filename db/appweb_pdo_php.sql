@@ -1,6 +1,15 @@
 -- Creación Base de datos --
-CREATE DATABASE prueba_pdo DEFAULT CHARACTER SET utf8 ;
-USE prueba_pdo; -- Usando la base de datos --
+CREATE DATABASE appweb_pdo_php DEFAULT CHARACTER SET utf8 ;
+USE appweb_pdo_php; -- Usando la base de datos --
+
+-- Tabla Usuarios --
+CREATE TABLE USERS(
+    idUser INT NOT NULL AUTO_INCREMENT,
+    emailUser VARCHAR(50) NOT NULL,
+    passwordUser VARCHAR(30) NOT NULL,
+    PRIMARY KEY(idUser)
+) ENGINE = InnoDB;
+
 
 -- Tabla Productos --
 CREATE TABLE PRODUCTS(
